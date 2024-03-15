@@ -1,0 +1,22 @@
+
+# HTID:22349149: DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES BELOW
+php_value display_errors 1
+# DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES ABOVE HTID:22349149:
+RewriteEngine On
+
+# If the request is not for a valid directory
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# If the request is not for a valid file
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Rewrite the URL to append .php internally
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /error.php [L]
+</IfModule>
