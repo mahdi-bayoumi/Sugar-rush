@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -273,21 +276,35 @@ th, td {
                     <div class="navbar-collapse collapse" id="mobile_menu">
                         <ul class="nav navbar-nav">
                             <li><a href="index.php">Home</a></li>
-                            <li><a href="#menu" onclick="forworder()" >Welcome</a></li>
+                            <li><a href="#menu" onclick="forworder()" >Menu</a></li>
                             <li><a href="#about"  onclick="forworder()">About Us</a></li>
                             <li><a href="#contact">Contact Us</a></li>
                             <li><a href="#visit">Visit Us</a></li>
                             <!-- <li><a href="#">Contact Us</a></li>-->
                         </ul>
                         
+                        <?php
 
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="" onclick="openForm()"><span class="glyphicon glyphicon-shopping-cart"></span></a></li>
+                        if(isset($_SESSION['username'])){
+                          echo ' <ul class="nav navbar-nav navbar-right">
+                            
+                          <li><a href="" class="dropdown-toggle" data-toggle="dropdown">Welcome '. $_SESSION['username'].' </a>
+                              <ul class="dropdown-menu bg-dark">
+                                  <li><a href="admin/logout.php">logout</a> </li>
+                                  
+                              </ul>';
+                          }
+                          else{
+                            echo '<ul class="nav navbar-nav navbar-right">
+                            
                             <li><a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-log-in"></span> Login / Sign Up <span class="caret"></span></a>
                                 <ul class="dropdown-menu bg-dark">
                                     <li><a href="admin_login.php">Login</a></li>
                                     <li><a href="signup.php">Sign Up</a></li>
-                                </ul>
+                                </ul>';
+                          }
+                          ?>
+                        
                             </li>
                         </ul>
                     </div>
@@ -311,9 +328,9 @@ th, td {
 
 	<div class="container-fluid pl-5" id="content">
 	 <div style="padding-left: 15%;">
-        <button  class='glowing-btn'  onclick="btnclick('../getDataSet.php')"><span class='glowing-txt'>S<span class='faulty-letter'>u</span>gar Rush Bransh-Darkifa</span></button>
-        <button class='glowing-btn' onclick="btnclick('../getDataSett.php')"><span class='glowing-txt'>H<span class='faulty-letter'>u</span>jeir Branch-Bourj Kalaway</span></button>
-        <button  class='glowing-btn'  onclick="btnclick('../getDataSett.php')"><span class='glowing-txt' >L<span class='faulty-letter'>e</span>go Branch-Tyre</span></button>
+        <button  class='glowing-btn' id="sugarrush" onclick="btnclick('../getDataSet.php',this.id)"><span class='glowing-txt'>S<span class='faulty-letter'>u</span>gar Rush Bransh-Darkifa</span></button>
+        <button class='glowing-btn' id="hujeir" onclick="btnclick('../getDataSett.php',this.id)"><span class='glowing-txt'>H<span class='faulty-letter'>u</span>jeir Branch-Bourj Kalaway</span></button>
+        <button  class='glowing-btn' id="legohouse" onclick="btnclick('../getDataSett.php',this.id)"><span class='glowing-txt' >L<span class='faulty-letter'>e</span>go Branch-Tyre</span></button>
         </div>   
     <section id="menu">
         <h2>Our Menu</h2>
@@ -325,7 +342,8 @@ th, td {
         ?>    
         </div>
         <script >
-    function btnclick(_url){
+    function btnclick(_url,clickedid){
+      localStorage.setItem("branch",clickedid);
         $.ajax({
             url : _url,
             type : 'post',
@@ -336,6 +354,7 @@ th, td {
              $('#DIVID').text('An error occurred');
             }
         });
+
     }
 </script>
         
@@ -384,7 +403,7 @@ th, td {
     <button class="open-button" onclick="openForm()"><span class="glyphicon glyphicon-shopping-cart"></span></button>
 
 <div class="form-popup" id="myForm">
-  <form action="/action_page.php" class="form-container">
+  <form  class="form-container">
     <h3>Cart</h3>
     
 <div id="tables">
@@ -404,7 +423,45 @@ th, td {
             </table>
 </div>
 
-    <button type="submit" class="btn">Order Now</button>
+    <button type="submit" class="btn" id="order" >Order Now</button>
+    <script type="text/javascript">
+    //daddy code
+    $ (document).ready(function() {
+        //mama code
+        $("button#order").click(function() {
+            //children code
+            var data = Object.entries(sessionStorage);
+  var post=[];
+  var item=[];
+  for (let row of entries) {
+    if(row[0]!="Total price"){
+    
+    /*for(let cell of row){
+      if(sessionStorage.getItem(cell)){
+        item.push(cell);
+      }
+      else{
+        item.push(cell[0]);
+        
+      }
+                        
+    }*/
+    post.push(row);
+    }
+  }
+            
+            $.ajax({
+                type: "POST",
+                url: "order.php",
+                dataType: 'text',
+                data: {"data":post},
+                success: function(data) {
+                   alert(data);
+                }
+            });
+        });
+    });
+</script>
     <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
   </form>
 </div>
@@ -428,7 +485,8 @@ function minus(id){
                         cell=row[1];
                         var newqty=parseInt(cell[0])-1;
                         update.push(newqty);
-                        var newprice=(parseFloat(cell[2])/parseFloat(cell[0]))*parseFloat(newqty);
+                        
+                        var newprice=(parseFloat(cell[2])/cell[0])*newqty;
                         update.push(newprice);
                         if(newqty == 0){
                           sessionStorage.removeItem(id);
@@ -453,7 +511,7 @@ function plus(id){
                         cell=row[1];
                         var newqty=parseInt(cell[0])+1;
                         update.push(newqty);
-                        var newprice=(parseFloat(cell[2])/parseFloat(cell[0]))*parseFloat(newqty);
+                        var newprice=(parseFloat(cell[2])/cell[0])*newqty;
                         update.push(newprice);
                         if(newqty == 0){
                           sessionStorage.removeItem(id);
@@ -513,7 +571,7 @@ function filltable(){
                       else{
                         item.setAttribute("id","price"+x);
 
-                        item.innerHTML = cell[0]+" Qty || "+cell[2]+"$";
+                        item.innerHTML = cell[0]+" Qty || "+parseFloat(cell[2])+"$";
                       }
 
                             trElement.appendChild(item);
@@ -563,6 +621,41 @@ function filltable(){
            document.getElementById("myForm").style.display = "none";
            
        }
+/*function order(){
+  
+  var data = Object.entries(sessionStorage);
+  var post=[];
+  for (let row of entries) {
+    if(row[0]!="Total price"){
+    var item=[];
+    for(let cell of row){
+      if(sessionStorage.getItem(cell)){
+        item.push(cell);
+      }
+      else{
+        item.push(cell[0]);
+        item.push(cell[2]);
+      }
+                        
+    }
+    post.push(item);
+    }
+  }
+    alert(post);
+    var myJSON = JSON.stringify( post );
+    var userid="3";
+    $.ajax({ 
+       type: "POST", 
+       url: "http://localhost/sr/public_html/order.php", 
+       data: userid , 
+       success: function() { 
+              alert("Success"); 
+        } 
+    }); 
+  }*/
+ 
+
+       
 
         $(document).ready(function() {
             $('.menu-item').click(function() {
