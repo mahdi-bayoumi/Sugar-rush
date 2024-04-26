@@ -277,6 +277,13 @@ th, td {
                         <ul class="nav navbar-nav">
                             <li><a href="index.php">Home</a></li>
                             <li><a href="#menu" onclick="forworder()" >Menu</a></li>
+                            <?php
+
+                        if(isset($_SESSION['username'])){
+                          echo '<li><a href="#">Reservation</a></li>
+                          <li><a href="#">History</a></li>';
+                          }
+                          ?>
                             <li><a href="#about"  onclick="forworder()">About Us</a></li>
                             <li><a href="#contact">Contact Us</a></li>
                             <li><a href="#visit">Visit Us</a></li>
@@ -290,7 +297,7 @@ th, td {
                             
                           <li><a href="" class="dropdown-toggle" data-toggle="dropdown">Welcome '. $_SESSION['username'].' </a>
                               <ul class="dropdown-menu bg-dark">
-                                  <li><a href="admin/logout.php">logout</a> </li>
+                                  <li><a href="admin/logout.php" onclick="logout()">logout</a> </li>
                                   
                               </ul>';
                           }
@@ -432,7 +439,7 @@ th, td {
             //children code
             var data = Object.entries(sessionStorage);
   var post=[];
-  var item=[];
+  var total=[];
   for (let row of entries) {
     if(row[0]!="Total price"){
     
@@ -448,13 +455,17 @@ th, td {
     }*/
     post.push(row);
     }
+    else{
+      total.push(row);
+    }
   }
+  var branch=localStorage.getItem("branch");
             
             $.ajax({
                 type: "POST",
                 url: "order.php",
                 dataType: 'text',
-                data: {"data":post},
+                data: {data:post ,branch:branch},
                 success: function(data) {
                    alert(data);
                 }
@@ -473,7 +484,10 @@ th, td {
 </footer>
     
     <script>
-        
+        function logout(){
+          localStorage.clear();
+          sessionStorage.clear();
+        }
 function minus(id){
   var update=[];
   entries = Object.entries(sessionStorage);

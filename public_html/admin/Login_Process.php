@@ -48,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (MD5($passwords)==$row['password']) {
 
             $_SESSION['username'] = $row['username'];
+            $_SESSION['userid'] = $row['id'];
             if($email=='admin@admin.com'){
             header("Location: admin_session.php");
             }
