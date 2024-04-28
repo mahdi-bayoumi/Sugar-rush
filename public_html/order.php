@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          }
          $description=[];
          $totalprice=0.00;
-         $branch=$_POST['branch'];
+         $branch=validate($_POST['branch']);
       foreach($_POST['data'] as $value){
         
             $item=validate($value[0]);
@@ -51,17 +51,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
         $info=implode("\r\n", $description);
-            $sqlo = "SELECT user_id, description, branch FROM orders WHERE user_id='$userid'";
+            $sqlo = "SELECT user_id, description, time, branch FROM orders WHERE user_id='$userid'";
             $stmto = $con->prepare($sqlo);
             $stmto->execute();
             $resulto = $stmto->get_result();
             
 if ($resulto->num_rows >= 1) {
     $rowo = $resulto->fetch_assoc();
-        
-            $time=date("Y-m-d h:i:s");
+            $time1=$rowo['time'];
+            $time2=date("Y-m-d h:i:s");
+
+            // Formulate the Difference between two dates
+            $diff = abs($time2 - $time1);
             
-            $query = "UPDATE orders SET  description='$info', branch='$branch', time='$time', total='$totalprice' WHERE user_id=$userid";
+            $years = floor($diff / (365*60*60*24));
+
+            $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+
+            $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+
+            $hours = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24)
+									/ (60*60));
+            $minutes = (int)floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60)/ 60);
+        if($minutes < 4){
+            $query = "UPDATE orders SET  description='$info', branch='$branch', time='$time2', total='$totalprice' WHERE user_id=$userid";
             $stmt = $con->prepare($query);
 
             if ($stmt) {
@@ -83,7 +96,32 @@ if ($resulto->num_rows >= 1) {
             } else {
                 echo "Statement preparation error: " . $con->error;
             }
-       
+       }
+       else{
+         $query = "UPDATE orders SET  description='$info', branch='$branch', time='$time2', total='$totalprice' WHERE user_id=$userid";
+            $stmt = $con->prepare($query);
+
+            if ($stmt) {
+                
+                
+                //echo "$info";
+                
+                
+                
+                
+                if ($stmt->execute()) {
+                    
+                    echo "success";
+                } else {
+                    echo "Error: " . $query . "<br>" . $con->error;
+                }
+    
+                $stmt->close();
+            } else {
+                echo "Statement preparation error: " . $con->error;
+            }
+        echo "the 4 minutes to update your order was spent please contact us on our mobile number to help you more";
+       }
         
     
 } else{

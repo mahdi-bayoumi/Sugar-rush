@@ -483,6 +483,13 @@ th, td {
     </div>
 </footer>
     
+
+
+
+
+
+
+
     <script>
         function logout(){
           localStorage.clear();
@@ -635,39 +642,7 @@ function filltable(){
            document.getElementById("myForm").style.display = "none";
            
        }
-/*function order(){
-  
-  var data = Object.entries(sessionStorage);
-  var post=[];
-  for (let row of entries) {
-    if(row[0]!="Total price"){
-    var item=[];
-    for(let cell of row){
-      if(sessionStorage.getItem(cell)){
-        item.push(cell);
-      }
-      else{
-        item.push(cell[0]);
-        item.push(cell[2]);
-      }
-                        
-    }
-    post.push(item);
-    }
-  }
-    alert(post);
-    var myJSON = JSON.stringify( post );
-    var userid="3";
-    $.ajax({ 
-       type: "POST", 
-       url: "http://localhost/sr/public_html/order.php", 
-       data: userid , 
-       success: function() { 
-              alert("Success"); 
-        } 
-    }); 
-  }*/
- 
+
 
        
 
