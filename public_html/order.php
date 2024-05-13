@@ -3,7 +3,7 @@
 require_once '../connection.php';
 session_start();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['userid'])) { 
    
 
     if(isset($_SESSION['userid'])){
@@ -165,6 +165,9 @@ if ($resulto->num_rows >= 1) {
     else{
         echo "you are not loggedin!!";
     }
+}
+else{
+    echo "you are not loggedin!!";
 }
 
 ?>

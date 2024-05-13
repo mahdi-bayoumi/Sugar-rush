@@ -73,6 +73,7 @@
         </div>
       </form>
       <div class="option">Already have an account?! <a href="admin_login.php">Login</a></div>
+      <div class="option">Home page?! <a href="index.php">Sugar Rush</a></div>  
       
     </div>
 

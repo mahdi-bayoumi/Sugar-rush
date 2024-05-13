@@ -45,6 +45,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     else{
 
+        $sqlcheck = "SELECT * FROM admins WHERE Email = ? LIMIT 1";
+        $stmtcheck = $con->prepare($sqlcheck);
+        $stmtcheck->bind_param("s", $email);
+        $stmtcheck->execute();
+        $resultcheck = $stmtcheck->get_result();
+        if ($resultcheck->num_rows == 1){
+            header("Location: ../signup.php?error=User-already-exist!!");
+        exit;
+        }
+        else{
+
+        
+
+
         $sql = "INSERT INTO admins (username, Email, password, Mobile, Location) VALUES (?, ?, ?, ?, ?)";
         $stmt = $con->prepare($sql);
 
@@ -53,7 +67,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($stmt->execute()) {
                 $_SESSION['username'] = $username;
-                header("Location: ../index.php");
+                header("Location: ../admin_login.php");
             } else {
                 echo "Error: " . $sql . "<br>" . $con->error;
             }
@@ -63,7 +77,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Statement preparation error: " . $con->error;
         }
     }
-
+    }
 
 }
 $con->close();

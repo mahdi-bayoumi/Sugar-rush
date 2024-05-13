@@ -202,11 +202,7 @@ session_start();
   }
 }
 
-@media only screen and (max-width: 600px) {
-  .glowing-btn{
-    font-size: 1em;
-  }
-}
+
 
 tbody td {
   /* 1. Animate the background-color
@@ -257,6 +253,225 @@ th, td {
   border-radius: var(--round);
   background-color: var(--color-white);
 }
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.reservation-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  
+}
+
+
+
+.section {
+	position: relative;
+	height: 75rem;
+}
+
+.section .section-center {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	right: 0;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+#booking {
+	font-family: 'Lato', sans-serif;
+}
+
+.booking-form {
+	background: #0f0f0f;
+	max-width: 642px;
+	width: 50%;
+	margin: auto;
+}
+
+.booking-form .form-header {
+	background-image: url('./resources/tables.jpg');
+	background-size: cover;
+	background-position: center;
+	padding: 85px 25px 25px;
+	position: relative;
+	z-index: 20;
+}
+
+.booking-form .form-header::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	background: rgba(81, 81, 81, 0.8);
+	z-index: -1;
+}
+
+.booking-form>form {
+	padding: 30px;
+}
+
+.booking-form .form-header h2 {
+	font-family: 'Medula One', cursive;
+	margin-top: 0;
+	margin-bottom: 15px;
+	color: #fff;
+    background:transparent;
+	font-size: 58px;
+	text-transform: capitalize;
+}
+
+.booking-form .form-header p {
+	color: #fff;
+	font-size: 18px;
+}
+
+.booking-form .form-group {
+	position: relative;
+	margin-bottom: 20px;
+}
+
+.booking-form .form-control {
+	background-color: transparent;
+	height: 45px;
+	padding: 0px 20px;
+	color: #fff;
+	border: 2px solid rgba(255, 255, 255, 0.15);
+	font-size: 16px;
+	font-weight: 700;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border-radius: 40px;
+	-webkit-transition: 0.2s all;
+	transition: 0.2s all;
+}
+
+.booking-form .form-control::-webkit-input-placeholder {
+	color: rgba(255, 255, 255, 0.15);
+}
+
+.booking-form .form-control:-ms-input-placeholder {
+	color: rgba(255, 255, 255, 0.15);
+}
+
+.booking-form .form-control::placeholder {
+	color: rgba(255, 255, 255, 0.15);
+}
+
+.booking-form .form-control:focus {
+	background-color: #fff;
+	color: #222;
+}
+
+.booking-form .form-control:focus::-webkit-input-placeholder {
+	color: rgba(0, 0, 0, 0.3);
+}
+
+.booking-form .form-control:focus:-ms-input-placeholder {
+	color: rgba(0, 0, 0, 0.3);
+}
+
+.booking-form .form-control:focus::placeholder {
+	color: rgba(0, 0, 0, 0.3);
+}
+
+.booking-form input[type="date"].form-control:invalid {
+	color: rgba(255, 255, 255, 0.15);
+}
+
+.booking-form input[type="date"]:focus:invalid {
+	color: rgba(0, 0, 0, 0.3);
+}
+
+.booking-form select.form-control {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+
+.booking-form select.form-control+.select-arrow {
+	position: absolute;
+	right: 10px;
+	bottom: 7px;
+	width: 32px;
+	line-height: 32px;
+	height: 32px;
+	text-align: center;
+	pointer-events: none;
+	color: rgba(255, 255, 255, 0.15);
+	font-size: 14px;
+}
+
+.booking-form select.form-control+.select-arrow:after {
+	content: '\279C';
+	display: block;
+	-webkit-transform: rotate(90deg);
+	transform: rotate(90deg);
+}
+
+.booking-form select.form-control:focus+.select-arrow:after {
+	color: rgba(0, 0, 0, 0.3);
+}
+
+.booking-form .form-label {
+	color: #ff9000;
+	text-transform: uppercase;
+	line-height: 24px;
+	height: 24px;
+	font-size: 14px;
+	font-weight: 400;
+	margin-left: 20px;
+}
+
+.booking-form .form-btn {
+	margin-top: 10px;
+}
+
+.booking-form .form-btn>button {
+	color: #fff;
+	background-color: #ff9000;
+	font-weight: 700;
+	height: 55px;
+	font-size: 18px;
+	border: none;
+	display: block;
+	text-transform: uppercase;
+	width: 100%;
+	border-radius: 40px;
+}
+
+@media only screen and (max-width: 1000px) {
+  .section {
+	position: relative;
+	height: 20rem;
+}
+}
+@media only screen and (max-width: 600px) {
+  .glowing-btn{
+    font-size: 1em;
+  }
+  .section {
+	position: relative;
+	height: 20rem;
+}
+}
 </style>
 </head>
 
@@ -280,8 +495,8 @@ th, td {
                             <?php
 
                         if(isset($_SESSION['username'])){
-                          echo '<li><a href="#">Reservation</a></li>
-                          <li><a href="#">History</a></li>';
+                          echo '<li><a href="#" id="openFormBtn">Reservation</a></li>
+                          <li><a href="History.php">History</a></li>';
                           }
                           ?>
                             <li><a href="#about"  onclick="forworder()">About Us</a></li>
@@ -314,6 +529,7 @@ th, td {
                         
                             </li>
                         </ul>
+                        
                     </div>
                 </div>
             </div>
@@ -325,7 +541,7 @@ th, td {
 
             <h1>Welcome to Sugar Rush</h1>
             <p>Your Sweet Treat Destination</p>
-            <a href="#menu" class"cta-button" onclick="forworder()">Explore Menu</a>
+            <a href="#menu" class="cta-button" onclick="forworder()">Explore Menu</a>
         </div>
     </header>
     </div>
@@ -334,8 +550,70 @@ th, td {
 
 
 	<div class="container-fluid pl-5" id="content">
+    
+  <div id="reservationFormOverlay" class="overlay">
+                        <div id="reservation-form" class="section">
+		<div class="section-center">
+			<div class="container">
+				<div class="row">
+					<div class="booking-form">
+						<div class="form-header">
+							<h2>Reserve your tables</h2>
+							<p>Reserve your table at our resturant.</p>
+						</div>
+						<form action="submit_reservation.php" method="POST">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <span class="form-label">Arrival date</span>
+                <input class="form-control" type="date" name="arrival_date" min="<?php echo date('Y-m-d'); ?>" required>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <span class="form-label">Arrival time</span>
+                <input class="form-control" type="time" name="arrival_time" min="12:00" max="23:59" required>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <span class="form-label">Tables</span>
+                <input class="form-control" type="number" name="tables" required>
+                <span class="select-arrow"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <span class="form-label">Adults</span>
+                <input class="form-control" type="number" name="adults" required>
+                <span class="select-arrow"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <span class="form-label">Kids</span>
+                <input class="form-control" type="number" name="kids" required>
+                <span class="select-arrow"></span>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" name="reservation_confirmed" value="1">
+    <div class="form-btn">
+        <button  type="submit" class="submit-btn">Reserve</button>
+        <button id="closeFormBtn" type="button">Close</button>
+    </div>
+</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+                        </div>
 	 <div style="padding-left: 15%;">
-        <button  class='glowing-btn' id="sugarrush" onclick="btnclick('../getDataSet.php',this.id)"><span class='glowing-txt'>S<span class='faulty-letter'>u</span>gar Rush Bransh-Darkifa</span></button>
+        <button  class='glowing-btn' id="sugarrush" onclick="btnclick('../getDataSet.php',this.id)"><span class='glowing-txt'>S<span class='faulty-letter'>u</span>gar Rush Bransh-Deirkifa</span></button>
         <button class='glowing-btn' id="hujeir" onclick="btnclick('../getDataSett.php',this.id)"><span class='glowing-txt'>H<span class='faulty-letter'>u</span>jeir Branch-Bourj Kalaway</span></button>
         <button  class='glowing-btn' id="legohouse" onclick="btnclick('../getDataSett.php',this.id)"><span class='glowing-txt' >L<span class='faulty-letter'>e</span>go Branch-Tyre</span></button>
         </div>   
@@ -398,7 +676,7 @@ th, td {
 <section id="visit">
     <h2>Visit US</h2>
     <ul>
-        <li><a href="https://maps.app.goo.gl/nDycbVbpUCK9sVmeA">Deikifa Branch</a></li>
+        <li><a href="https://maps.app.goo.gl/nDycbVbpUCK9sVmeA">Deirkifa Branch</a></li>
         <li><a href="https://maps.app.goo.gl/mzyYjJYSoUvAE28a8">Tyre Sahely sooks Branch</a></li>
         <li><a href="https://maps.app.goo.gl/1YsDiQtKiWbpev5J9">Hujeir Village Branch</a></li>
     </ul>
@@ -491,6 +769,21 @@ th, td {
 
 
     <script>
+      
+      
+      document.getElementById("openFormBtn").addEventListener("click", function() {
+  document.getElementById("reservationFormOverlay").style.display = "block";
+  document.body.classList.add("blur");
+});
+
+document.getElementById("closeFormBtn").addEventListener("click", function() {
+  document.getElementById("reservationFormOverlay").style.display = "none";
+  document.body.classList.remove("blur");
+});
+
+
+
+      
         function logout(){
           localStorage.clear();
           sessionStorage.clear();
