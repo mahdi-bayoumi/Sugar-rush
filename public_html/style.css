@@ -167,3 +167,10 @@ footer p {
     margin: 0;
 }
 /* Add styles for the navbar */
+#data1{
+    display: flex;
+    flex-direction: column;
+   
+}
+
+

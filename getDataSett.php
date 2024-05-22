@@ -25,14 +25,33 @@
             $querys = "SELECT * FROM itemst WHERE category_id = '" . $row['id'] . "'";
             $results = $pdo->query($querys);
             
-    echo '<div class="item-list" >';
+            echo '<div class="data1" style="position: relative;">';
+    echo '<div class="item-list" style="display: flex;
+    padding: 10px;
+    padding-bottom: var(--size-focusRing);
+    overflow-x: scroll;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100%;
+    mask-size: 100%;
+    position: relative;
+    margin:10px;
+   
+    ">';
     while ($rows = $results->fetch(PDO::FETCH_ASSOC)) {
         echo '
-        <div class="item" >
-        <h3 class="item-name' . $rows['id'] . '" style="font-weight: bold; margin-bottom: 5px;">' . $rows['name'] . '</h3>
+        <div class="item" style=" display: inline-flex;
+        width:30rem;
+        margin:5px;
+        flex-shrink: 0">
+        
+        <h3 class="item-name' . $rows['id'] . '" style="">' . $rows['name'] . '</h3>
 
         <figure>
-        <img  src="data:image/jpeg;base64,'.base64_encode($rows['img']).' "/>
+        <img  src="data:image/jpeg;base64,'.base64_encode($rows['img']).' " style="width:30rem;margin:10px;"/>
         </figure>
 
         <p class="item-price' . $rows['id'] . ' " style="color: green; font-size: 1.1em; text-align:right;">' . $rows['price'] . '$</p>
@@ -48,6 +67,7 @@
         <button  type="button" onclick="addtocart(' . $rows['id'] . ');">
         <span class="glyphicon glyphicon-plus"></span>
         Add to Cart</button>
+        
         </div>
         
         <script>
@@ -92,8 +112,8 @@
         if(sessionStorage.getItem(itemName)){
             Totalprice=Totalprice-parseFloat(sessionStorage.getItem(itemName));
           }
-          var array=[quantity,price]
-        sessionStorage.setItem(itemName,array );
+var array=[quantity,price]
+        sessionStorage.setItem(itemName,array);
         sessionStorage.setItem("Total price",Totalprice );
         console.log(price);
         
@@ -104,6 +124,7 @@
 
         
     }
+    echo '</div>';
     echo '</div>';
 
          echo "</div>";

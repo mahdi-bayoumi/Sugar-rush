@@ -14,12 +14,15 @@ session_start();
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 <style>
+  
     :root {
   --glow-color: hsl(186 100% 69%);
 }
     *::before,
 *::after {
+  position: relative;
   box-sizing: border-box;
 }
     .glowing-btn {
@@ -472,6 +475,7 @@ th, td {
 	height: 20rem;
 }
 }
+
 </style>
 </head>
 
@@ -619,12 +623,17 @@ th, td {
         </div>   
     <section id="menu">
         <h2>Our Menu</h2>
+        
      
     
-        <div id="DIVID">
-        <?php 
+        <div id="DIVID" class="container">
+          
+
+          <?php 
         require_once "../getDataSet.php";
-        ?>    
+        ?>  
+          
+          
         </div>
         <script >
     function btnclick(_url,clickedid){
@@ -667,19 +676,13 @@ th, td {
     <ul>
         <li>Phone: <a href="tel:+96178954777">+961 78 954 777</a></li>
         <li>Email: <a href="mailto:info@sugarrush.com">info@sugarrush.com</a></li>
-        <li><a href="https://maps.app.goo.gl/nDycbVbpUCK9sVmeA">Visit US</a></li>
-        <li><a href="https://maps.app.goo.gl/mzyYjJYSoUvAE28a8">Visit US</a></li>
-        <li><a href="https://maps.app.goo.gl/1YsDiQtKiWbpev5J9">Visit US</a></li>
+        
     </ul>
     <!-- You can also add a contact form or additional contact information here -->
 </section>
-<section id="visit">
+<section id="visit" >
     <h2>Visit US</h2>
-    <ul>
-        <li><a href="https://maps.app.goo.gl/nDycbVbpUCK9sVmeA">Deirkifa Branch</a></li>
-        <li><a href="https://maps.app.goo.gl/mzyYjJYSoUvAE28a8">Tyre Sahely sooks Branch</a></li>
-        <li><a href="https://maps.app.goo.gl/1YsDiQtKiWbpev5J9">Hujeir Village Branch</a></li>
-    </ul>
+   
     <!-- You can also add a contact form or additional contact information here -->
 </section>
 
@@ -812,6 +815,8 @@ function minus(id){
                     
                   }
                 }
+                closeForm();
+  openForm();
 }
 function plus(id){
   
@@ -837,9 +842,13 @@ function plus(id){
                     
                   }
                 }
+                closeForm();
+  openForm();
 }
 function del(id){
   sessionStorage.removeItem(id);
+  closeForm();
+  openForm();
 }
 
 function filltable(){
@@ -959,7 +968,56 @@ function filltable(){
             });
         });
     </script>
-	
+	<script>
+        
+        
+        window.onload = function () {
+           if(!sessionStorage.getItem("Total price")){
+          sessionStorage.setItem("Total price",0 );
+        }
+      };
+        
+
+        function addtocart(id){
+            var e = document.getElementById("quantity-select"+id);
+            var item = document.querySelector(`.item-name${id}`);
+            var price = document.querySelector(`.item-price${id}`);
+    if (item) { // Check if item is found before accessing textContent
+      var itemName = item.textContent;
+    } else {
+      console.error("Item with id", id, "not found.");
+      // Handle the case where the item is not found (optional)
+    }
+    if (price) { // Check if item is found before accessing textContent
+      var price = parseFloat(price.textContent);
+
+    } 
+    else {
+      console.error("price with id", id, "not found.");
+      // Handle the case where the item is not found (optional)
+    }
+        var quantity=e.value;
+        price=price*parseFloat(quantity);
+
+        if(sessionStorage.getItem("Total price")){
+          
+         var Totalprice=price+parseFloat(sessionStorage.getItem("Total price"));
+         
+        }
+        else{
+          var Totalprice=price;
+        }
+        if(sessionStorage.getItem(itemName)){
+            Totalprice=Totalprice-parseFloat(sessionStorage.getItem(itemName));
+          }
+var array=[quantity,price]
+        sessionStorage.setItem(itemName,array);
+        sessionStorage.setItem("Total price",Totalprice );
+        console.log(price);
+        
+        }
+
+        </script>
     <script src="javascript.js"></script>
 
 </body>
